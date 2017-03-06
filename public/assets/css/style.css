@@ -1,0 +1,17 @@
+body  {
+    background-image: url('http://woodsbagot.stealthtraffic.com/wp-content/uploads/2013/07/100_Bishopsgate_N15_1920-1920x1080.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.userContainer {
+	background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    margin: 0.75rem auto;
+    padding: 0;
+    max-width: 450px;
+    min-width: 280px;
+    width: 100%;
+}
