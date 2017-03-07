@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+var secret = 'tajne';
 
 // user registration with encrypting password and validation on server site
 // localhost:8080/api/users
@@ -38,13 +40,36 @@ module.exports = function(router){
                     if (!validPassword) {
                     res.json({ success: false, message: 'Could not authenticate password' });
                     } else {
-                        res.json({ success: true, message: 'User authenticated' });
+                        var token = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
+                        res.json({ success: true, message: 'User authenticated', token: token });
                     }
                 } else {
                     res.json({ success: false, message: 'No password provided' });
                 }
             }
         });
+    });
+
+    router.use(function(req, res, next) {
+
+        var token = req.body.token || req.body.query || req.headers['x-access-token'];
+
+        if(token) {
+            jwt.verify(token, secret, function(err, decoded) {
+                if(err) {
+                    res.json({ success: false, message: 'Token invalid'});
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            })
+        } else {
+            res.json({ success: false, message: 'No token provided' });
+        }
+    });
+
+    router.post('/me', function(req, res) {
+        res.send(req.decoded);
     });
 
     return router;
