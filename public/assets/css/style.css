@@ -10,12 +10,6 @@
     padding-left: 0;    
 }
 
-#page-wrapper {
-    width: 100%;        
-    padding: 0;
-    background-color: #fff;
-}
-
 @media(min-width:768px) {
     #wrapper {
         padding-left: 225px;
@@ -110,8 +104,7 @@
     display: block;
     padding: 10px 15px 10px 38px;
     text-decoration: none;
-    /*color: #999;*/
-    color: #fff;    
+    color: #999;    
 }
 
 .side-nav>li>ul>li>a:hover {
@@ -136,4 +129,10 @@
 
 .navbar .nav > li > a:hover > .label {
   top: 10px;
+}
+
+#success_message{ display: none;}
+
+.background-form {
+    background-color: #f5f5f5
 }
