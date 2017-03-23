@@ -1,44 +1,53 @@
-<div class="userContainer">
-    <form ng-submit="register.regUser(regData);">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2>User registration</h2>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" ng-model="register.regData.username">
+<form class="well form-horizontal" ng-submit="register.regUser(regData);">
+    <fieldset>
+        <!-- Form Name -->
+        <legend>Sing in to your wallet</legend>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label">Username:</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input placeholder="User name" class="form-control" type="text" id="username" ng-model="register.regData.username">
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" ng-model="register.regData.email">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" ng-model="register.regData.password">
-                </div>
-            </div>
-            <div class="panel-footer">
-                <button class="btn btn-primary" type="submit">Register</button>
-                <!--<div ng-show="register.loading">
-                    <p class="text-center"><span class="glyphicon glyphicon-repeat spinner"></span>Loading...</p>
-                </div>-->
             </div>
         </div>
-    </form>
-</div>
-<div class="userContainer" ng-show="register.loading">
-    <div class="alert alert-info">
-        <p class="text-center"><span class="glyphicon glyphicon-repeat spinner"></span> Loading...</p>
-    </div>
-</div>
-<div class="userContainer" ng-show="register.successMsg">
-    <div class="alert alert-success">
-        <strong>Success!</strong> {{ register.successMsg }}.
-    </div>
-</div>
-<div class="userContainer" ng-show="register.errorMsg">
-    <div class="alert alert-warning">
-        <strong>Warning!</strong> {{ register.errorMsg }}.
-    </div>
-</div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Email:</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    <input placeholder="Email address" class="form-control" type="text" id="email" ng-model="register.regData.email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Password:</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    <input placeholder="Password" class="form-control" type="password" id="password" ng-model="register.regData.password">
+                </div>
+            </div>
+        </div>
+        <!-- Loading message -->
+        <div ng-show="register.loading">
+            <div class="alert alert-info">Loading <i class="glyphicon glyphicon-repeat spinner"></i> Loading... </div>
+        </div>
+        <!-- Success message -->
+        <div ng-show="register.successMsg">
+            <div class="alert alert-success">Success <i class="glyphicon glyphicon-thumbs-up"></i> {{ register.successMsg }} </div>
+        </div>
+        <!-- Error message -->
+        <div ng-show="register.errorMsg">
+            <div class="alert alert-warning">Error <i class="glyphicon glyphicon-thumbs-down"></i> {{ register.errorMsg }} </div>
+        </div>
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-warning">Login <span class="glyphicon glyphicon-save"></span></button>
+            </div>
+        </div>
+    </fieldset>
+</form>
