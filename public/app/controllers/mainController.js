@@ -1,13 +1,22 @@
 angular.module('mainController',['authServices'])
 
-.controller('mainCtrl', function(Auth, $timeout, $location, $rootScope) {
+.controller('mainCtrl', function(Auth, $timeout, $location, $rootScope, $scope) {
     var app = this;
     app.loadme = false;
+    $rootScope.currentUser = '';
+
+    $scope.cost = { username: 'jasfasola', costname: 'abc', costprice: '123'};
+
+    $scope.costSubmit = function(){
+        $scope.cost.username = $rootScope.currentUser;
+        console.log($scope.cost);
+    };
 
     $rootScope.$on('$routeChangeStart', function() {
         if(Auth.isLoggedIn()) {
             app.isLoggedIn = true;
             Auth.getUser().then(function(data) {
+                $rootScope.currentUser = data.data.username;
                 app.username = data.data.username;
                 app.useremail = data.data.email;
                 app.loadme = true;

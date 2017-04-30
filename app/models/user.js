@@ -8,6 +8,12 @@ var UserSchema = new Schema({
     email: { type: String, lowercase: true, required: true, unique: true}
 });
 
+var costSchema = new Schema({
+    username: { type: String},
+    costname: { type: String},
+    costprice: { type: Number}
+})
+
 UserSchema.pre('save', function(next){
     var user = this;
     bcrypt.hash(user.password, null, null, function(err, hash){
@@ -22,3 +28,4 @@ UserSchema.methods.comparePassword = function(password){
 }
 
 module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Cost', costSchema);

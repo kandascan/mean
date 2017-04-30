@@ -1,8 +1,8 @@
-<form class="well form-horizontal" action=" " method="post" id="addCost_form">
+<form class="well form-horizontal" ng-submit="costSubmit()">
     <fieldset>
 
         <!-- Form Name -->
-        <legend>Add your daily cost</legend>
+        <legend>Add your daily cost <h2>{{currentUser}}</h2></legend>
 
         <!-- Text input-->
 
@@ -11,7 +11,7 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                    <input name="cost_name" placeholder="Cost Name" class="form-control" type="text">
+                    <input name="cost_name" placeholder="Cost Name" class="form-control" type="text" ng-model="cost.costname">
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                    <input name="cost_price" placeholder="Cost Price" class="form-control" type="text">
+                    <input name="cost_price" placeholder="Cost Price" class="form-control" type="text" ng-model="cost.costprice">
                 </div>
             </div>
         </div>
