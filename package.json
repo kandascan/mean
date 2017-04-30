@@ -2,7 +2,7 @@
   "name": "meanstack",
   "version": "1.0.0",
   "description": "mean stack application",
-  "main": "ijs)",
+  "main": "server.js",
   "scripts": {
     "test": "mocha",
     "start": "node server.js"

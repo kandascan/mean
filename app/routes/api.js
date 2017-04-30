@@ -1,10 +1,27 @@
 var User = require('../models/user');
+var Cost = require('../models/cost');
 var jwt = require('jsonwebtoken');
 var secret = 'tajne';
 
-// user registration with encrypting password and validation on server site
-// localhost:8080/api/users
 module.exports = function(router){
+    // cost add
+    router.post('/costs', function(req, res){
+        var cost = new Cost();
+        cost.username = req.body.username;
+        cost.costname = req.body.costname;
+        cost.costprice = req.body.costprice;
+
+            cost.save(function(err){
+                if(err){
+                    res.json({ success: false, message: 'Jakiś jebany error' })
+                }else{
+                    res.json({ success: true, message: 'cost created' })
+                }
+            });
+
+    });
+    // user registration with encrypting password and validation on server site
+    // localhost:8080/api/users
     // user registration route
     router.post('/users', function(req, res){
         var user = new User();
@@ -29,7 +46,7 @@ module.exports = function(router){
     // user login route
     router.post('/authenticate', function(req, res){
         User.findOne({ username: req.body.username }).select('email password username').exec(function(err, user) {
-            if (err) { 
+            if (err) {
                 throw err;
             }
             if (!user) {
