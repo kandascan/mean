@@ -1,9 +1,12 @@
-<form class="well form-horizontal" ng-submit="register.regUser(regData);">
-    <fieldset>
-        <!-- Form Name -->
-        <legend>Sing in to your wallet</legend>
-        <!-- Text input-->
-        <div class="form-group">
+<div class="well">
+    <!-- Modal content-->
+    <div class="modal-header" style="padding:35px 50px;">
+        <h4><span class="glyphicon glyphicon-lock"></span> Sign Up</h4>
+    </div>
+    <div class="modal-body" style="padding:40px 50px;">
+        <form class="form-horizontal" ng-submit="register.regUser(regData);">
+
+                    <div class="form-group">
             <label class="col-md-4 control-label">Username:</label>
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
@@ -46,8 +49,12 @@
         <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-warning">Login <span class="glyphicon glyphicon-save"></span></button>
+                <button type="submit" class="btn btn-warning">Sign Up <span class="glyphicon glyphicon-off"></span></button>
             </div>
         </div>
-    </fieldset>
-</form>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <p>Already member? <a href="/login">Login</a></p>
+    </div>
+</div>

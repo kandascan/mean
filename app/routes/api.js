@@ -10,7 +10,10 @@ module.exports = function (router) {
         cost.username = req.body.username;
         cost.costname = req.body.costname;
         cost.costprice = req.body.costprice;
-
+        cost.paydate = req.body.paydate;
+        cost.costtype = req.body.costtype;
+        cost.costdescription = req.body.costdescription;
+        
         cost.save(function (err) {
             if (err) {
                 res.json({ success: false, message: 'Jakiś jebany error' })

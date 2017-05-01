@@ -14,9 +14,9 @@
                 <th class="column-title">Object Id </th>
                 <th class="column-title">Cost name </th>
                 <th class="column-title">Cost price </th>
-                <!--<th class="column-title">Pay date </th>
-                <th class="column-title">User name </th>
-                <th class="column-title">Cost description </th>-->
+                <th class="column-title">Pay date </th>
+                <th class="column-title">Cost type </th>
+                <th class="column-title">Cost description </th>
             </tr>
         </thead>
         <tbody>
@@ -24,9 +24,9 @@
                 <td ng-bind="cost._id"></td>
                 <td ng-bind="cost.costname"></td>
                 <td ng-bind="cost.costprice | number:2"></td>
-                <!--<td ng-bind="cost.paydate"></td>
-                <td ng-if="cost.user" ng-bind="cost.user.displayName"></td>
-                <td ng-bind="cost.costdescription"></td>-->
+                <td ng-bind="cost.paydate | date:'dd.MM.yyyy'"></td>
+                <td ng-bind="cost.costtype"></td>
+                <td ng-bind="cost.costdescription"></td>
             </tr>
         </tbody>
     </table>

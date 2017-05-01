@@ -5,19 +5,23 @@ var app = angular.module('appRoutes', ['ngRoute'])
         $routeProvider
 
             .when('/', {
-                templateUrl: 'app/views/pages/home.html'
+                templateUrl: 'app/views/pages/home.html',
+                authentidacted: true
             })
 
             .when('/about', {
-                templateUrl: 'app/views/pages/about.html'
+                templateUrl: 'app/views/pages/about.html',
+                authentidacted: true
             })
 
             .when('/addCost', {
-                templateUrl: 'app/views/pages/costs/addCost.html'
+                templateUrl: 'app/views/pages/costs/addCost.html',
+                authentidacted: true
             })
 
             .when('/showCosts', {
-                templateUrl: 'app/views/pages/costs/showCosts.html'
+                templateUrl: 'app/views/pages/costs/showCosts.html',
+                authentidacted: true
             })
 
             .when('/register', {

@@ -8,7 +8,7 @@ angular.module('mainController', ['authServices'])
         $scope.costs = [];
 
 
-        $scope.cost = { username: '', costname: '', costprice: '' };
+        $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
         $scope.addCost = function () {
             $scope.cost.username = $rootScope.currentuser;
 
@@ -16,8 +16,8 @@ angular.module('mainController', ['authServices'])
             $scope.errorMsg = false;
             $scope.successMsg = false;
             $http.post('/api/costs', $scope.cost).then(function (data) {
-                $scope.cost = { username: '', costname: '', costprice: '' };
                 if (data.data.success) {
+                    $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
                     $scope.successMsg = data.data.message;
                     $scope.loading = false;
                     $timeout(function () {
@@ -68,7 +68,7 @@ angular.module('mainController', ['authServices'])
                     app.successMsg = data.data.message;
                     app.loading = false;
                     $timeout(function () {
-                                console.log('$rootScope.currentuser is: ' + $rootScope.currentuser);
+                        console.log('$rootScope.currentuser is: ' + $rootScope.currentuser);
 
                         $http.get('/api/costs/' + $rootScope.currentuser).then(function (data) {
                             $scope.costs = data.data;

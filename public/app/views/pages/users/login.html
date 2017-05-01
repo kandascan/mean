@@ -1,44 +1,53 @@
-<form class="well form-horizontal" ng-submit="main.doLogin(loginData);">
-    <fieldset>
-        <!-- Form Name -->
-        <legend>Logi in to your wallet</legend>
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label">Username:</label>
-            <div class="col-md-4 inputGroupContainer">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input placeholder="Username" class="form-control" type="text" id="username" ng-model="main.loginData.username">
+<div class="well">
+    <!-- Modal content-->
+    <div class="modal-header" style="padding:35px 50px;">
+        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+    </div>
+    <div class="modal-body" style="padding:40px 50px;">
+        <form class="form-horizontal" ng-submit="main.doLogin(loginData);">
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Username:</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input placeholder="Username" class="form-control" type="text" id="username" ng-model="main.loginData.username">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label">Password:</label>
-            <div class="col-md-4 inputGroupContainer">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                    <input placeholder="Password" class="form-control" type="password" id="password" ng-model="main.loginData.password">
+            <div class="form-group">
+                <label class="col-md-4 control-label">Password:</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+                        <input placeholder="Password" class="form-control" type="password" id="password" ng-model="main.loginData.password">
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Loading message -->
-        <div ng-show="main.loading">
-            <div class="alert alert-info">Loading <i class="glyphicon glyphicon-repeat spinner"></i> Loading... </div>
-        </div>
-        <!-- Success message -->
-        <div ng-show="main.successMsg">
-            <div class="alert alert-success">Success <i class="glyphicon glyphicon-thumbs-up"></i> {{ main.successMsg }} </div>
-        </div>
-        <!-- Error message -->
-        <div ng-show="main.errorMsg">
-            <div class="alert alert-warning">Error <i class="glyphicon glyphicon-thumbs-down"></i> {{ main.errorMsg }} </div>
-        </div>
-        <!-- Button -->
-        <div class="form-group">
-            <label class="col-md-4 control-label"></label>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-warning">Login <span class="glyphicon glyphicon-log-in"></span></button>
+            <!-- Loading message -->
+            <div ng-show="main.loading">
+                <div class="alert alert-info">Loading <i class="glyphicon glyphicon-repeat spinner"></i> Loading... </div>
             </div>
-        </div>
-    </fieldset>
-</form>
+            <!-- Success message -->
+            <div ng-show="main.successMsg">
+                <div class="alert alert-success">Success <i class="glyphicon glyphicon-thumbs-up"></i> {{ main.successMsg }} </div>
+            </div>
+            <!-- Error message -->
+            <div ng-show="main.errorMsg">
+                <div class="alert alert-warning">Error <i class="glyphicon glyphicon-thumbs-down"></i> {{ main.errorMsg }} </div>
+            </div>
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-warning">Login <span class="glyphicon glyphicon-log-in"></span></button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <p>Not a member? <a href="/register">Sign Up</a></p>
+    </div>
+</div>
