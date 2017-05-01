@@ -2,7 +2,7 @@
     <table id="sample-table" class="table table-striped jambo_table bulk_action">
         <thead>
             <tr class="headings">
-                <th class="column-title">Object Id </th>
+                <!--<th class="column-title">Object Id </th>-->
                 <th class="column-title">Cost name </th>
                 <th class="column-title">Cost price </th>
                 <th class="column-title">Pay date </th>
@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr class="even pointer" ng-repeat="cost in costs" ui-sref="costs.view({ costId: cost._id })">
-                <td ng-bind="cost._id"></td>
+                <!--<td ng-bind="cost._id"></td>-->
                 <td ng-bind="cost.costname"></td>
                 <td ng-bind="cost.costprice | number:2"></td>
                 <td ng-bind="cost.paydate | date:'dd.MM.yyyy'"></td>
