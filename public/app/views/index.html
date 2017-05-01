@@ -60,8 +60,10 @@
                             <a ng-show="main.isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i> Hello {{ main.username }} <b class="fa fa-angle-down"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/profile"><i class="fa fa-fw fa-user"></i> Show Profile</a></li>
-                                <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
-                                <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                                <li style="text-decoration: line-through;">
+                                    <a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                                <li style="text-decoration: line-through;">
+                                    <a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
                                 <li class="divider"></li>
                                 <li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
                             </ul>
@@ -75,10 +77,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" ng-show="main.isLoggedIn">
-                    <li>
+                    <li style="text-decoration: line-through;">
                         <a href="#"><i class="fa fa-fw fa-search"></i>  Search</a>
                     </li>
-                    <li>
+                    <li style="text-decoration: line-through;">
                         <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-bar-chart-o"></i>  Charts <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                         <ul id="submenu-2" class="collapse">
                             <li><a href="#"><i class="fa fa-angle-double-right"></i> Pie Chart</a></li>
@@ -95,7 +97,7 @@
                             <!--<li><a href="#"><i class="fa fa-angle-double-right"></i> Multi Costs</a></li>-->
                         </ul>
                     </li>
-                    <li>
+                    <li style="text-decoration: line-through;">
                         <a href="#"><i class="fa fa-fw fa-paper-plane-o"></i> Contact</a>
                     </li>
                     <li>
@@ -113,7 +115,7 @@
                     <div ng-repeat="cost in listCosts" class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                         <i ng-class="cost.header.icon" aria-hidden="true"></i> {{cost.header.name}}
                         <div class="count" ng-bind="cost.body.cost | number:2"></div>
-                        <span ng-class="cost.footer.color"><i ng-class="cost.footer.arrow"></i>{{cost.footer.percent}}</span> {{cost.footer.description}}
+                        <span ng-class="cost.footer.color"><i ng-class="cost.footer.arrow"></i>{{cost.footer.percent}}</span>                        {{cost.footer.description}}
                     </div>
                 </div>
                 <!-- /top tiles -->
