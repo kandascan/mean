@@ -1,0 +1,37 @@
+<!-- top tiles -->
+<!--<div class="row tile_count">
+    <div ng-repeat="cost in vm.listCosts" class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <i ng-class="cost.header.icon" aria-hidden="true"></i> {{cost.header.name}}</span>
+        <div class="count" ng-bind="cost.body.cost | number:2"></div>
+        <span><i ng-class="cost.footer.color"><i ng-class="cost.footer.arrow"></i>{{cost.footer.percent}} </i> {{cost.footer.description}}</span>
+    </div>
+</div>-->
+<!-- /top tiles -->
+<div class="table-responsive">
+    <table id="sample-table" class="table table-striped jambo_table bulk_action">
+        <thead>
+            <tr class="headings">
+                <th class="column-title">Object Id </th>
+                <th class="column-title">Cost name </th>
+                <th class="column-title">Cost price </th>
+                <!--<th class="column-title">Pay date </th>
+                <th class="column-title">User name </th>
+                <th class="column-title">Cost description </th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="even pointer" ng-repeat="cost in costs" ui-sref="costs.view({ costId: cost._id })">
+                <td ng-bind="cost._id"></td>
+                <td ng-bind="cost.costname"></td>
+                <td ng-bind="cost.costprice | number:2"></td>
+                <!--<td ng-bind="cost.paydate"></td>
+                <td ng-if="cost.user" ng-bind="cost.user.displayName"></td>
+                <td ng-bind="cost.costdescription"></td>-->
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<script type="tex/javascript">
+  $('#sample-table').DataTable();
+</script>-->

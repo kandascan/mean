@@ -16,6 +16,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/costs/addCost.html'
             })
 
+            .when('/showCosts', {
+                templateUrl: 'app/views/pages/costs/showCosts.html'
+            })
+
             .when('/register', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'registrationController',

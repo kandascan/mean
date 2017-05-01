@@ -3,8 +3,10 @@ angular.module('mainController', ['authServices'])
     .controller('mainCtrl', function (Auth, $timeout, $location, $rootScope, $scope, $http) {
         var app = this;
         app.loadme = false;
-
+        /////////////// costs
         $rootScope.currentuser = '';
+        $scope.costs = [];
+
 
         $scope.cost = { username: '', costname: '', costprice: '' };
         $scope.addCost = function () {
@@ -19,8 +21,12 @@ angular.module('mainController', ['authServices'])
                     $scope.successMsg = data.data.message;
                     $scope.loading = false;
                     $timeout(function () {
-                        $location.path('/');
+                        $location.path('/showCosts');
                         $scope.successMsg = false;
+
+                        $http.get('/api/costs/' + $rootScope.currentuser).then(function (data) {
+                            $scope.costs = data.data;
+                        });
 
                     }, 1000);
                 } else {
@@ -30,7 +36,10 @@ angular.module('mainController', ['authServices'])
             });
 
         };
-
+        $http.get('/api/costs/' + $rootScope.currentuser).then(function (data) {
+            $scope.costs = data.data;
+        });
+        /////////////////////////////////////////////////////////////////////////////
         $rootScope.$on('$routeChangeStart', function () {
             if (Auth.isLoggedIn()) {
                 app.isLoggedIn = true;
@@ -43,6 +52,7 @@ angular.module('mainController', ['authServices'])
             } else {
                 app.isLoggedIn = false;
                 app.username = '';
+                $rootScope.currentuser = '';
                 app.loadme = true;
             }
         });
@@ -53,12 +63,17 @@ angular.module('mainController', ['authServices'])
             app.successMsg = false;
 
             Auth.login(app.loginData).then(function (data) {
-
+                $rootScope.currentuser = data.config.data.username;
                 if (data.data.success) {
                     app.successMsg = data.data.message;
                     app.loading = false;
                     $timeout(function () {
-                        $location.path('/profile');
+                                console.log('$rootScope.currentuser is: ' + $rootScope.currentuser);
+
+                        $http.get('/api/costs/' + $rootScope.currentuser).then(function (data) {
+                            $scope.costs = data.data;
+                        });
+                        $location.path('/showCosts');
                         app.loginData = {};
                         app.successMsg = false;
                     }, 1000);
