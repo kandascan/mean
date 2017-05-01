@@ -108,6 +108,15 @@
         <div class="container-fluid" role="main">
             <!-- Page Heading -->
             <div class="row" id="main">
+                <!-- top tiles -->
+                <div class="row tile_count" ng-show="main.isLoggedIn">
+                    <div ng-repeat="cost in listCosts" class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                        <i ng-class="cost.header.icon" aria-hidden="true"></i> {{cost.header.name}}</span>
+                        <div class="count" ng-bind="cost.body.cost | number:2"></div>
+                        <span><i ng-class="cost.footer.color"><i ng-class="cost.footer.arrow"></i>{{cost.footer.percent}} </i> {{cost.footer.description}}</span>
+                    </div>
+                </div>
+                <!-- /top tiles -->
                 <div ng-view></div>
             </div>
             <!-- /.row -->
