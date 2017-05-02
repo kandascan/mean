@@ -5,11 +5,19 @@ angular.module('mainController', ['authServices'])
         /////////////// costs
         $scope.costs = [];
 
+        function compare(a, b) {
+            if (a[1] < b[1]) {
+                return -1;
+            }
+            if (a[1] > b[1]) {
+                return 1;
+            }
+            return 0;
+        }
+
         var dataCharts = function (costs) {
             var data = [];
             var title = ['All cost', 'From begining'];
-
-            data.push(title);
 
             for (var i = 0; i < costs.length; i++) {
                 var costname = costs[i].costname;
@@ -17,14 +25,13 @@ angular.module('mainController', ['authServices'])
                 var tabdata = [costname, costprice];
                 data.push(tabdata);
             }
-            console.log(data);
+            data.sort(compare);
+            data.unshift(title);
             return data;
         }
 
         function drawChart() {
-            console.log($scope.costs);
             var data = google.visualization.arrayToDataTable(dataCharts($scope.costs));
-            console.log(data.pg[0].label);
 
             // Pie chart
             var optionsPieChart = {
@@ -35,7 +42,7 @@ angular.module('mainController', ['authServices'])
 
             // Pie 3D chart
             var optionsPie3DChart = {
-                title: 'My Daily Activities',
+                title: data.pg[0].label,
                 is3D: true,
             };
             var pie3DChart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
@@ -43,11 +50,26 @@ angular.module('mainController', ['authServices'])
 
             // Donut chart
             var optionsDonutChart = {
-                title: 'My Daily Activities',
+                title: data.pg[0].label,
                 pieHole: 0.4,
             };
             var donutChart = new google.visualization.PieChart(document.getElementById('donutchart'));
             donutChart.draw(data, optionsDonutChart);
+
+            // Exploding pie chart
+            var optionsExplodingPieChart = {
+                title: data.pg[0].label,
+                pieSliceText: 'label',
+                slices: {
+                    4: { offset: 0.2 },
+                    12: { offset: 0.3 },
+                    14: { offset: 0.4 },
+                    15: { offset: 0.5 },
+                },
+            };
+
+            var explodingPieChart = new google.visualization.PieChart(document.getElementById('explodingpiechart'));
+            explodingPieChart.draw(data, optionsExplodingPieChart);
         }
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
