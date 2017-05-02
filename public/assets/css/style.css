@@ -146,6 +146,11 @@ body {
     border-top: 0;
 }
 
+#addCostForm {
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, .05); 
+    background: inherit; 
+    border: 0;
+}
 
 
 

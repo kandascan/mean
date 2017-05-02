@@ -1,8 +1,9 @@
-<form class="well form-horizontal" ng-submit="addCost()">
+<h2 style="text-align: center">Add your daily cost</h2><br/>
+
+<form class="well form-horizontal" id="addCostForm" ng-submit="addCost()">
     <fieldset>
 
         <!-- Form Name -->
-        <br/><h2 style="text-align: center">Add your daily cost</h2><br/>
         <!-- Loading message -->
         <div ng-show="loading">
             <div class="alert alert-info">Loading <i class="glyphicon glyphicon-repeat spinner"></i> Loading... </div>

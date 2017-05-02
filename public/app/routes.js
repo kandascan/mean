@@ -14,6 +14,11 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authentidacted: true
             })
 
+            .when('/chartsCost', {
+                templateUrl: 'app/views/pages/costs/chartsCost.html',
+                authentidacted: true
+            })
+
             .when('/addCost', {
                 templateUrl: 'app/views/pages/costs/addCost.html',
                 authentidacted: true
