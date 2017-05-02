@@ -15,15 +15,44 @@ angular.module('mainController', ['authServices'])
             return 0;
         }
 
-        var dataCharts = function (costs) {
-            var data = [];
-            var title = ['All cost', 'From begining'];
+        // var dataCharts = function (costs) {
+        //     var data = [];
+        //     var title = ['All cost', 'From begining'];
 
-            for (var i = 0; i < costs.length; i++) {
-                var costname = costs[i].costname;
-                var costprice = costs[i].costprice;
-                var tabdata = [costname, costprice];
-                data.push(tabdata);
+        //     for (var i = 0; i < costs.length; i++) {
+        //         var costname = costs[i].costname;
+        //         var costprice = costs[i].costprice;
+        //         var tabdata = [costname, costprice];
+        //         data.push(tabdata);
+        //     }
+        //     data.sort(compare);
+        //     data.unshift(title);
+        //     return data;
+        // }
+
+        //$scope.costtype = 'Petrol';
+
+        var dataCharts = function (costs, title, costtype) {
+            var data = [];
+            var title = [title, 'From begining'];
+
+            if (costtype === null) {
+                for (var i = 0; i < costs.length; i++) {
+                    var costname = costs[i].costname;
+                    var costprice = costs[i].costprice;
+                    var tabdata = [costname, costprice];
+                    data.push(tabdata);
+                }
+            } else {
+                for (var i = 0; i < costs.length; i++) {
+
+                    if (costs[i].costtype === costtype) {
+                        var costname = costs[i].costname;
+                        var costprice = costs[i].costprice;
+                        var tabdata = [costname, costprice];
+                        data.push(tabdata);
+                    }
+                }
             }
             data.sort(compare);
             data.unshift(title);
@@ -31,34 +60,42 @@ angular.module('mainController', ['authServices'])
         }
 
         function drawChart() {
-            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs));
-
             // Pie chart
+            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'All costs', null));
+
             var optionsPieChart = {
                 title: data.pg[0].label
             };
             var pieChart = new google.visualization.PieChart(document.getElementById('piechart'));
             pieChart.draw(data, optionsPieChart);
 
+
+
             // Pie 3D chart
+            var dataFood = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Food costs', 'Food'));
+
             var optionsPie3DChart = {
-                title: data.pg[0].label,
+                title: dataFood.pg[0].label,
                 is3D: true,
             };
             var pie3DChart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            pie3DChart.draw(data, optionsPie3DChart);
+            pie3DChart.draw(dataFood, optionsPie3DChart);
 
             // Donut chart
+            var dataBills = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Events costs', 'Bills'));
+
             var optionsDonutChart = {
-                title: data.pg[0].label,
+                title: dataBills.pg[0].label,
                 pieHole: 0.4,
             };
             var donutChart = new google.visualization.PieChart(document.getElementById('donutchart'));
-            donutChart.draw(data, optionsDonutChart);
+            donutChart.draw(dataBills, optionsDonutChart);
 
             // Exploding pie chart
+            var dataPetrol = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Petrol costs', 'Petrol'));
+
             var optionsExplodingPieChart = {
-                title: data.pg[0].label,
+                title: dataPetrol.pg[0].label,
                 pieSliceText: 'label',
                 slices: {
                     4: { offset: 0.2 },
@@ -69,7 +106,7 @@ angular.module('mainController', ['authServices'])
             };
 
             var explodingPieChart = new google.visualization.PieChart(document.getElementById('explodingpiechart'));
-            explodingPieChart.draw(data, optionsExplodingPieChart);
+            explodingPieChart.draw(dataPetrol, optionsExplodingPieChart);
         }
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
