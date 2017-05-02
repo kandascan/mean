@@ -14,8 +14,18 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authentidacted: true
             })
 
-            .when('/chartsCost', {
-                templateUrl: 'app/views/pages/costs/chartsCost.html',
+            .when('/pieCharts', {
+                templateUrl: 'app/views/pages/costs/pieCharts.html',
+                authentidacted: true
+            })
+
+             .when('/barCharts', {
+                templateUrl: 'app/views/pages/costs/barCharts.html',
+                authentidacted: true
+            })
+
+             .when('/lineCharts', {
+                templateUrl: 'app/views/pages/costs/lineCharts.html',
                 authentidacted: true
             })
 
