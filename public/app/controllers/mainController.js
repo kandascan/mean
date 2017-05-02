@@ -6,6 +6,60 @@ angular.module('mainController', ['authServices'])
         /////////////// costs
         $scope.costs = [];
 
+        var dataCharts = function (costs) {
+            var data = [];
+            var title = ['All cost', 'From begining'];
+
+            data.push(title);
+
+            for (var i = 0; i < costs.length; i++) {
+                var costname = costs[i].costname;
+                var costprice = costs[i].costprice;
+                var tabdata = [costname, costprice];
+                data.push(tabdata);
+            }
+            console.log(data);
+            return data;
+        }
+
+
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            console.log($scope.costs);
+            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs));
+            console.log(data.pg[0].label);
+
+            // Pie chart
+            var optionsPieChart = {
+                title: data.pg[0].label
+            };
+            var pieChart = new google.visualization.PieChart(document.getElementById('piechart'));
+            pieChart.draw(data, optionsPieChart);
+
+            // Pie 3D chart
+            var optionsPie3DChart = {
+                title: 'My Daily Activities',
+                is3D: true,
+            };
+            var pie3DChart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            pie3DChart.draw(data, optionsPie3DChart);
+
+            // Donut chart
+            var optionsDonutChart = {
+                title: 'My Daily Activities',
+                pieHole: 0.4,
+            };
+            var donutChart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            donutChart.draw(data, optionsDonutChart);
+        }
+
+
+
+
+
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
         $scope.addCost = function () {
