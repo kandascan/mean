@@ -1,6 +1,10 @@
 <h2 style="text-align: center">Pie charts</h2><br/>
 <div class="row">
     <div class="col-md-6">
+        <div class="input-group myselect">
+            <select ng-options="type for type in costtypes" ng-model="costtype" ng-change="drawChart(costtype)" class="form-control selectpicker">
+            </select>
+        </div>
         <div id="piechart"></div>
     </div>
     <div class="col-md-6">
@@ -13,6 +17,3 @@
         <div id="explodingpiechart"></div>
     </div>
 </div>
-<script type="text/javascript">
-
-</script>

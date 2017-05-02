@@ -21,6 +21,10 @@ body {
     #page-wrapper {
         padding: 12px 10px;
     }
+    .myselect {
+        width: 30% !important;
+        float: right;
+    }
 }
 
 /* Top Navigation */

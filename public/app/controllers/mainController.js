@@ -5,6 +5,9 @@ angular.module('mainController', ['authServices'])
         /////////////// costs
         $scope.costs = [];
 
+        $scope.costtypes = ['Petrol', 'Food', 'Bills', 'Entertainment', 'Events'];
+        $scope.costtype = $scope.costtypes[0];
+
         function compare(a, b) {
             if (a[1] < b[1]) {
                 return -1;
@@ -59,9 +62,11 @@ angular.module('mainController', ['authServices'])
             return data;
         }
 
-        function drawChart() {
+        $scope.drawChart = function (item) {
+            if (item === undefined) { item = $scope.costtype; }
+
             // Pie chart
-            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'All costs', null));
+            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, item, item));
 
             var optionsPieChart = {
                 title: data.pg[0].label
@@ -158,7 +163,7 @@ angular.module('mainController', ['authServices'])
                             vm.totalCost
                         ];
                         google.charts.load('current', { 'packages': ['corechart'] });
-                        google.charts.setOnLoadCallback(drawChart);
+                        google.charts.setOnLoadCallback($scope.drawChart);
                     });
                 });
             } else {

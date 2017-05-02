@@ -61,14 +61,8 @@
             <div class="col-md-4 selectContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                    <select name="costType" class="form-control selectpicker" ng-model="cost.costtype">
-                            <option value=''>Please select cost type</option>
-                            <option>Petrol</option>
-                            <option>Food</option>
-                            <option>Entertainment</option>
-                            <option>Bills</option>
-                            <option>Events</option>
-                        </select>
+                    <select name="costType" ng-options="type for type in costtypes" ng-model="cost.costtype" class="form-control selectpicker">
+                        <option value=''>Please select cost type</option></select>
                 </div>
             </div>
         </div>
