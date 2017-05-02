@@ -83,7 +83,7 @@ module.exports = function (router) {
 
     // user login route
     router.post('/authenticate', function (req, res) {
-        User.findOne({ username: req.body.username }).select('email password username').exec(function (err, user) {
+        User.findOne({ username: req.body.username.toLowerCase() }).select('email password username').exec(function (err, user) {
             if (err) {
                 throw err;
             }
