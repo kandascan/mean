@@ -1,19 +1,17 @@
 <h2 style="text-align: center">Pie charts</h2><br/>
 <div class="row">
-    <div class="col-md-6">
-        <div class="input-group myselect">
-            <select ng-options="type for type in costtypes" ng-model="costtype" ng-change="drawChart(costtype)" class="form-control selectpicker">
+    <div class="col-md-6" ng-repeat="chart in piecharts">
+        <div class="widget">
+            <div class="widget-header"><h3><i class="fa fa-bar-chart-o"></i> {{chart}}</h3>
+                <div class="input-group myselect">
+                    <select ng-options="type for type in costtypes" ng-model="costtype" ng-change="drawChart(costtype)" class="form-control selectpicker">
             </select>
+                </div>
+            </div>
+            <div class="widget-content">
+                <div id="{{chart}}"></div>
+            </div>
         </div>
-        <div id="piechart"></div>
-    </div>
-    <div class="col-md-6">
-        <div id="piechart_3d"></div>
-    </div>
-    <div class="col-md-6">
-        <div id="donutchart"></div>
-    </div>
-    <div class="col-md-6">
-        <div id="explodingpiechart"></div>
     </div>
 </div>
+

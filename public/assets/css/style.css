@@ -261,3 +261,44 @@ body {
 .cr-red       { background-color: #e43; }
 .cr-orange    { background-color: #e82; }
 .cr-yellow    { background-color: #ec0; }
+
+
+.widget {
+    border-width: 1px;
+    border-style: solid;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-color: lightgray;
+}
+
+.widget .widget-header {
+    padding: 0 10px;
+    height: 35px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+    background-color: #eeeeee;
+}
+
+.widget .widget-content {
+    padding: 20px 10px;
+    background: white;
+}
+
+.widget .widget-header h3 {
+    display: inline-block;
+    vertical-align: middle;
+    font-family: "Tahoma";
+    font-size: 1.1em;
+    margin: 0;
+    line-height: 35px;
+    float: left;
+}
+
+.widget .widget-header i {
+    margin-right: 5px;
+}
+
+#mainview {
+    padding: 15px;
+}

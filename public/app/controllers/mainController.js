@@ -4,6 +4,7 @@ angular.module('mainController', ['authServices'])
         app.loadme = false;
         /////////////// costs
         $scope.costs = [];
+        $scope.piecharts = ['piechart', 'piechart_3d', 'donutchart', 'explodingpiechart'];
 
         $scope.costtypes = [];
         $http.get('/api/coststype').then(function (data) {
