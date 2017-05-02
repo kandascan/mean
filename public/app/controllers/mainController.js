@@ -100,7 +100,7 @@ angular.module('mainController', ['authServices'])
             donutChart.draw(dataBills, optionsDonutChart);
 
             // Exploding pie chart
-            var dataPetrol = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Petrol costs', 'Petrol'));
+            var dataPetrol = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Fuel', 'Fuel'));
 
             var optionsExplodingPieChart = {
                 title: dataPetrol.pg[0].label,
