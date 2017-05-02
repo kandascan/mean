@@ -1,5 +1,4 @@
 angular.module('mainController', ['authServices'])
-
     .controller('mainCtrl', function (Auth, $timeout, $location, $rootScope, $scope, $http) {
         var app = this;
         app.loadme = false;
@@ -21,11 +20,6 @@ angular.module('mainController', ['authServices'])
             console.log(data);
             return data;
         }
-
-
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
             console.log($scope.costs);
@@ -55,11 +49,6 @@ angular.module('mainController', ['authServices'])
             var donutChart = new google.visualization.PieChart(document.getElementById('donutchart'));
             donutChart.draw(data, optionsDonutChart);
         }
-
-
-
-
-
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
         $scope.addCost = function () {
@@ -109,6 +98,8 @@ angular.module('mainController', ['authServices'])
                             vm.totalToday,
                             vm.totalCost
                         ];
+                        google.charts.load('current', { 'packages': ['corechart'] });
+                        google.charts.setOnLoadCallback(drawChart);
                     });
                 });
             } else {
@@ -147,9 +138,6 @@ angular.module('mainController', ['authServices'])
                 $location.path('/');
             }, 2000);
         };
-
-
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
