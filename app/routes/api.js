@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Cost = require('../models/cost');
+var CostType = require('../models/costtype');
 var jwt = require('jsonwebtoken');
 var secret = 'tajne';
 
@@ -13,7 +14,7 @@ module.exports = function (router) {
         cost.paydate = req.body.paydate;
         cost.costtype = req.body.costtype;
         cost.costdescription = req.body.costdescription;
-        
+
         cost.save(function (err) {
             if (err) {
                 res.json({ success: false, message: 'Jakiś jebany error' })
@@ -27,6 +28,30 @@ module.exports = function (router) {
     router.get('/costs/:name', function (req, res) {
         var name = req.params.name;
         Cost.find({ 'username': name }).exec(function (err, data) {
+            if (err) {
+                return res.send(500, err);
+            }
+            return res.send(data);
+        });
+    });
+
+    // cost type
+    router.post('/coststype', function (req, res) {
+        var costtype = new CostType();
+        costtype.name = req.body.name;
+
+        costtype.save(function (err) {
+            if (err) {
+                res.json({ success: false, message: 'Jakiś jebany error' })
+            } else {
+                res.json({ success: true, message: 'cost created' })
+            }
+        });
+
+    });
+
+    router.get('/coststype', function (req, res) {
+        CostType.find().exec(function (err, data) {
             if (err) {
                 return res.send(500, err);
             }

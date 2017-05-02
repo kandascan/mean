@@ -5,8 +5,14 @@ angular.module('mainController', ['authServices'])
         /////////////// costs
         $scope.costs = [];
 
-        $scope.costtypes = ['Petrol', 'Food', 'Bills', 'Entertainment', 'Events'];
-        $scope.costtype = $scope.costtypes[0];
+        $scope.costtypes = [];
+        $http.get('/api/coststype').then(function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                $scope.costtypes.push(data.data[i].name);
+            }
+            $scope.costtype = $scope.costtypes[0];
+            $scope.costtypes = $scope.costtypes.sort();
+        });
 
         function compare(a, b) {
             if (a[1] < b[1]) {
@@ -64,7 +70,6 @@ angular.module('mainController', ['authServices'])
 
         $scope.drawChart = function (item) {
             if (item === undefined) { item = $scope.costtype; }
-
             // Pie chart
             var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, item, item));
 
@@ -73,8 +78,6 @@ angular.module('mainController', ['authServices'])
             };
             var pieChart = new google.visualization.PieChart(document.getElementById('piechart'));
             pieChart.draw(data, optionsPieChart);
-
-
 
             // Pie 3D chart
             var dataFood = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Food costs', 'Food'));
