@@ -71,6 +71,7 @@ angular.module('mainController', ['authServices'])
 
         $scope.drawChart = function (item) {
             if (item === undefined) { item = $scope.costtype; }
+            if(document.getElementById('piechart') === null) return;
             // Pie chart
             var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, item, item));
 
