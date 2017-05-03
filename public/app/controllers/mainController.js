@@ -40,7 +40,37 @@ angular.module('mainController', ['authServices'])
         //     return data;
         // }
 
-        //$scope.costtype = 'Petrol';
+        var CostTypesJsGrid = function(){
+            var selectCostTypes = [];
+            for(var i = 0; i< $scope.costtypes.length; i++) {
+                var optionCost = { Name: $scope.costtypes[i], Id: i }
+                selectCostTypes.push(optionCost);
+            }
+            return selectCostTypes;
+        }
+        
+        var loadJsGrid = function () {
+            $("#jsGrid").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                // inserting: true,
+                // editing: true,
+                sorting: true,
+                paging: true,
+
+                data: $scope.costs,
+
+                fields: [
+                    // { type: "control" },
+                    { name: "costname", type: "text", width: 100, validate: "required" },
+                    { name: "costprice", type: "number", width: 50 },
+                    { name: "paydate", type: "date", width: 100 },
+                    { name: "costtype", type: "select", items: CostTypesJsGrid(), valueField: "Name", textField: "Name" },
+                    { name: "costdescription", type: "text" }                    
+                ]
+            });
+        };
 
         var dataCharts = function (costs, title, costtype) {
             var data = [];
@@ -71,7 +101,7 @@ angular.module('mainController', ['authServices'])
 
         $scope.drawChart = function (item) {
             if (item === undefined) { item = $scope.costtype; }
-            if(document.getElementById('piechart') === null) return;
+            if (document.getElementById('piechart') === null) return;
             // Pie chart
             var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, item, item));
 
@@ -169,6 +199,7 @@ angular.module('mainController', ['authServices'])
                         ];
                         google.charts.load('current', { 'packages': ['corechart'] });
                         google.charts.setOnLoadCallback($scope.drawChart);
+                        loadJsGrid();
                     });
                 });
             } else {
