@@ -50,6 +50,20 @@ angular.module('mainController', ['authServices'])
         }
 
         var loadJsGrid = function () {
+            var costs = [];
+            for (var i = 0; i < $scope.costs.length; i++) {
+                var cost = {
+                    _id: $scope.costs[i]._id,
+                    costname: $scope.costs[i].costname,
+                    username: $scope.costs[i].username,
+                    costprice: $scope.costs[i].costprice,
+                    paydate: vm.getDateTimeFromDate($scope.costs[i].paydate),
+                    costtype: $scope.costs[i].costtype,
+                    costdescription: $scope.costs[i].costdescription
+                };
+                costs.push(cost);
+            }
+
             $("#jsGrid").jsGrid({
                 width: "100%",
                 height: "400px",
@@ -62,7 +76,7 @@ angular.module('mainController', ['authServices'])
                 pageSize: 10,
                 pageButtonCount: 5,
                 pageIndex: 1,
-                data: $scope.costs,
+                data: costs,
                 controller: {
                     loadData: function (filter) {
                         var d = $.Deferred();
@@ -74,11 +88,20 @@ angular.module('mainController', ['authServices'])
                     },
                     insertItem: function (item) {
                         item.username = app.username;
+                        item.paydate = vm.ConvertDateToUsFormat(item.paydate);
                         $http.post('/api/costs', item).then(function (data) {
+                            if (!data.data.success) {
+                                alert(data.data.message);
+                            }
                         });
                     },
                     updateItem: function (item) {
+                        console.log(item);
+                        item.paydate = vm.ConvertDateToUsFormat(item.paydate);
                         $http.put('/api/costs/' + item._id, item).then(function (data) {
+                            if (data.data.errors) {
+                                alert(data.data.message);
+                            }
                         });
                     },
                     deleteItem: function (item) {
@@ -89,7 +112,12 @@ angular.module('mainController', ['authServices'])
                 fields: [
                     { type: "control" },
                     { name: "costname", type: "text", width: 100, validate: "required" },
-                    { name: "costprice", type: "number", width: 50 },
+                    {
+                        name: "costprice", type: "number", width: 50,
+                        itemTemplate: function (value) {
+                            return value.toFixed(2);
+                        }
+                    },
                     { name: "paydate", type: "text", width: 100 },
                     { name: "costtype", type: "select", items: CostTypesJsGrid(), valueField: "Name", textField: "Name" },
                     { name: "costdescription", type: "text" }
@@ -177,7 +205,7 @@ angular.module('mainController', ['authServices'])
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
         $scope.addCost = function () {
             $scope.cost.username = app.username;
-
+            $scope.cost.paydate = vm.ConvertDateToUsFormat($scope.cost.paydate);
             $scope.loading = true;
             $scope.errorMsg = false;
             $scope.successMsg = false;
@@ -428,6 +456,12 @@ angular.module('mainController', ['authServices'])
                     description: ' From last Week'
                 }
             };
+        };
+        vm.ConvertDateToUsFormat = function (date) {
+            var dd = date.substring(3, 5);
+            var mm = date.substring(0, 2);
+            var yyyy = date.substring(6, 10);
+            return dd + '.' + mm + '.' + yyyy;
         };
 
         vm.getDateTimeFromDate = function (date) {
