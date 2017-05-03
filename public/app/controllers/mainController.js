@@ -56,33 +56,36 @@ angular.module('mainController', ['authServices'])
                 inserting: true,
                 editing: true,
                 sorting: true,
+                autoload: false,
+                pageLoading: false,
                 paging: true,
+                pageSize: 10,
+                pageButtonCount: 5,
+                pageIndex: 1,
                 data: $scope.costs,
                 controller: {
                     loadData: function (filter) {
-                        console.log('loadData');
-                        $http.get('/api/costs/' + app.username).then(function (data) {
-                            $scope.costs = data.data;
+                        var d = $.Deferred();
+                        $http.get('/api/costs/' + app.username).then(function (response) {
+                            //var data = { data: response.data, itemsCount: response.data.length };
+                            d.resolve(response.data);
+                            return d.promise(response.data);
                         });
                     },
                     insertItem: function (item) {
                         item.username = app.username;
                         $http.post('/api/costs', item).then(function (data) {
-                            console.log(item);
-                            console.log(data);
-                            if (data.data.success) {
-
-                            }
-                            if (!data.data.success) {
-                                alert(data.data.message);
-                                $("#jsGrid").trigger('reloadGrid'); 
-                            }
                         });
                     },
-                    updateItem: $.noop,
-                    deleteItem: $.noop
+                    updateItem: function (item) {
+                        $http.put('/api/costs/' + item._id, item).then(function (data) {
+                        });
+                    },
+                    deleteItem: function (item) {
+                        $http.delete('/api/costs/' + item._id).then(function (data) {
+                        });
+                    }
                 },
-
                 fields: [
                     { type: "control" },
                     { name: "costname", type: "text", width: 100, validate: "required" },
@@ -91,7 +94,7 @@ angular.module('mainController', ['authServices'])
                     { name: "costtype", type: "select", items: CostTypesJsGrid(), valueField: "Name", textField: "Name" },
                     { name: "costdescription", type: "text" }
                 ]
-            });                                        
+            });
         };
 
         var dataCharts = function (costs, title, costtype) {

@@ -25,6 +25,37 @@ module.exports = function (router) {
 
     });
 
+    router.delete('/costs/:id', function (req, res) {
+        Cost.remove({ _id: req.params.id }, function (err) {
+            if (err) {
+                res.send(err);
+            }
+            res.json("deleted :(");
+        });
+    });
+
+    router.put('/costs/:id', function (req, res) {
+        Cost.findById(req.params.id, function (err, cost) {
+            console.log(req.body);
+            if (err) {
+                res.send(err);
+            }
+            cost.username = req.body.username;
+            cost.costname = req.body.costname;
+            cost.costprice = req.body.costprice;
+            cost.paydate = req.body.paydate;
+            cost.costtype = req.body.costtype;
+            cost.costdescription = req.body.costdescription;
+
+            cost.save(function (err, cost) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(cost);
+            });
+        });
+    });
+
     router.get('/costs/:name', function (req, res) {
         var name = req.params.name;
         Cost.find({ 'username': name }).exec(function (err, data) {
