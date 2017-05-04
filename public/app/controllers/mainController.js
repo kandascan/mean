@@ -4,7 +4,6 @@ angular.module('mainController', ['authServices'])
         app.loadme = false;
         /////////////// costs
         $scope.costs = [];
-        $scope.piecharts = ['piechart', 'piechart_3d', 'donutchart', 'explodingpiechart'];
 
         $scope.costtypes = [];
         $http.get('/api/coststype').then(function (data) {
@@ -13,6 +12,65 @@ angular.module('mainController', ['authServices'])
             }
             $scope.costtype = $scope.costtypes[0];
             $scope.costtypes = $scope.costtypes.sort();
+
+            $scope.piecharts = [
+                {
+                    icon: 'fa fa-pie-chart',
+                    header: 'Pie chart',
+                    name: 'piechart',
+                    filter: {
+                        select: $scope.costtypes,
+                        option: $scope.costtype
+                    },
+                    optionsChart: {
+                        title: 'Ptesti'
+                    }
+                },
+                {
+                    icon: 'fa fa-pie-chart',
+                    header: 'Pie 3D chart',
+                    name: 'piechart_3d',
+                    filter: {
+                        select: $scope.costtypes,
+                        option: $scope.costtype
+                    },
+                    optionsChart: {
+                        title: '3D ciastko',
+                        is3D: true
+                    }
+                },
+                {
+                    icon: 'fa fa-pie-chart',
+                    header: 'Pie donut chart',
+                    name: 'donutchart',
+                    filter: {
+                        select: $scope.costtypes,
+                        option: $scope.costtype
+                    },
+                    optionsChart: {
+                        title: 'Donuts',
+                        pieHole: 0.4
+                    }
+                },
+                {
+                    icon: 'fa fa-pie-chart',
+                    header: 'Exploding pie chart',
+                    name: 'explodingpiechart',
+                    filter: {
+                        select: $scope.costtypes,
+                        option: $scope.costtype
+                    },
+                    optionsChart: {
+                        title: 'Jakis wybuch',
+                        pieSliceText: 'label',
+                        slices: {
+                            4: { offset: 0.2 },
+                            12: { offset: 0.3 },
+                            14: { offset: 0.4 },
+                            15: { offset: 0.5 },
+                        }
+                    }
+                }];
         });
 
         function compare(a, b) {
@@ -124,9 +182,9 @@ angular.module('mainController', ['authServices'])
             });
         };
 
-        var dataCharts = function (costs, title, costtype) {
+        var dataCharts = function (costs, costtype) {
             var data = [];
-            var title = [title, 'From begining'];
+            var title = [costtype, 'From begining'];
 
             if (costtype === null) {
                 for (var i = 0; i < costs.length; i++) {
@@ -151,54 +209,12 @@ angular.module('mainController', ['authServices'])
             return data;
         }
 
-        $scope.drawChart = function (item) {
-            if (item === undefined) { item = $scope.costtype; }
+        $scope.drawChart = function (costtype = $scope.costtype, chart) {
             if (document.getElementById('piechart') === null) return;
-            // Pie chart
-            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, item, item));
-
-            var optionsPieChart = {
-                title: data.pg[0].label
-            };
-            var pieChart = new google.visualization.PieChart(document.getElementById('piechart'));
-            pieChart.draw(data, optionsPieChart);
-
-            // Pie 3D chart
-            var dataFood = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Food costs', 'Food'));
-
-            var optionsPie3DChart = {
-                title: dataFood.pg[0].label,
-                is3D: true,
-            };
-            var pie3DChart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            pie3DChart.draw(dataFood, optionsPie3DChart);
-
-            // Donut chart
-            var dataBills = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Events costs', 'Bills'));
-
-            var optionsDonutChart = {
-                title: dataBills.pg[0].label,
-                pieHole: 0.4,
-            };
-            var donutChart = new google.visualization.PieChart(document.getElementById('donutchart'));
-            donutChart.draw(dataBills, optionsDonutChart);
-
-            // Exploding pie chart
-            var dataPetrol = google.visualization.arrayToDataTable(dataCharts($scope.costs, 'Fuel', 'Fuel'));
-
-            var optionsExplodingPieChart = {
-                title: dataPetrol.pg[0].label,
-                pieSliceText: 'label',
-                slices: {
-                    4: { offset: 0.2 },
-                    12: { offset: 0.3 },
-                    14: { offset: 0.4 },
-                    15: { offset: 0.5 },
-                },
-            };
-
-            var explodingPieChart = new google.visualization.PieChart(document.getElementById('explodingpiechart'));
-            explodingPieChart.draw(dataPetrol, optionsExplodingPieChart);
+            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, costtype));
+            var optionsChart = chart.optionsChart;          
+            var chart = new google.visualization.PieChart(document.getElementById(chart.name));
+            chart.draw(data, optionsChart);
         }
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
@@ -250,7 +266,12 @@ angular.module('mainController', ['authServices'])
                             vm.totalCost
                         ];
                         google.charts.load('current', { 'packages': ['corechart'] });
-                        google.charts.setOnLoadCallback($scope.drawChart);
+                        google.charts.setOnLoadCallback(function(){
+                            for(var i = 0; i<$scope.piecharts.length; i++){
+                                $scope.drawChart(undefined, $scope.piecharts[i]);
+                            }
+                            
+                        });
                         loadJsGrid();
                     });
                 });
