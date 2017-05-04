@@ -300,6 +300,7 @@ angular.module('mainController', ['authServices'])
 
             var avgCostsThisWeek = 0;
             var iteratorThisWeek = 0;
+            var averageCostThisWeek = 0;
             for (var i = 0; i < items.length; i++) {
                 if (vm.CheckDateThisWeek(items[i].paydate)) {
                     avgCostsThisWeek += items[i].costprice;
@@ -307,7 +308,9 @@ angular.module('mainController', ['authServices'])
                 }
             }
 
-            var averageCostThisWeek = Math.round((avgCostsThisWeek / iteratorThisWeek) * 100) / 100;
+            if (avgCostsThisWeek != 0) {
+                averageCostThisWeek = Math.round((avgCostsThisWeek / iteratorThisWeek) * 100) / 100;
+            }
 
             var avgCostLastWeek = 0;
             var iteratorLastWeek = 0;
@@ -324,11 +327,11 @@ angular.module('mainController', ['authServices'])
             var colorClass = '';
             var costPercent = 0;
 
-            if (averageCostThisWeek !== 0 && averageCostLastWeek !== 0) {
+            if (averageCostThisWeek !== 0 && averageCostLastWeek !== 0 && avgCostLastWeek !== 0 && avgCostsThisWeek !== 0) {
                 costPercent = Math.round((averageCostThisWeek / averageCostLastWeek) * 10000) / 100;
             }
 
-            if (averageCostThisWeek > averageCostLastWeek) {
+            if (averageCostThisWeek > averageCostLastWeek || avgCostLastWeek === 0) {
                 colorClass = 'red';
                 arrowClass = 'fa fa-sort-desc';
             } else {
@@ -358,18 +361,28 @@ angular.module('mainController', ['authServices'])
 
             var minCostsThisWeek = Number.MAX_VALUE;
             for (var i = 0; i < items.length; i++) {
-                if (vm.CheckDateThisWeek(items[i].paydate))
+                if (vm.CheckDateThisWeek(items[i].paydate)) {
                     if (items[i].costprice < minCostsThisWeek) {
                         minCostsThisWeek = items[i].costprice;
                     }
+                }
+            }
+
+            if (minCostsThisWeek === Number.MAX_VALUE) {
+                minCostsThisWeek = 0;
             }
 
             var minCostLastWeek = Number.MAX_VALUE;
             for (var i = 0; i < items.length; i++) {
-                if (vm.CheckDateLastWeek(items[i].paydate))
+                if (vm.CheckDateLastWeek(items[i].paydate)) {
                     if (items[i].costprice < minCostLastWeek) {
                         minCostLastWeek = items[i].costprice;
                     }
+                }
+            }
+
+            if (minCostLastWeek === Number.MAX_VALUE) {
+                minCostLastWeek = 0;
             }
 
             var arrowClass = '';
@@ -408,7 +421,7 @@ angular.module('mainController', ['authServices'])
         vm.max = function (items) {
             if (items.length === 0) return 0;
 
-            var maxCostsThisWeek = Number.MIN_VALUE;
+            var maxCostsThisWeek = 0;
             for (var i = 0; i < items.length; i++) {
                 if (vm.CheckDateThisWeek(items[i].paydate))
                     if (items[i].costprice > maxCostsThisWeek) {
@@ -416,7 +429,7 @@ angular.module('mainController', ['authServices'])
                     }
             }
 
-            var maxCostLastWeek = Number.MIN_VALUE;
+            var maxCostLastWeek = 0;
             for (var i = 0; i < items.length; i++) {
                 if (vm.CheckDateLastWeek(items[i].paydate))
                     if (items[i].costprice > maxCostLastWeek) {
