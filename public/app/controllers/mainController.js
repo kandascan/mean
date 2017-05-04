@@ -131,7 +131,6 @@ angular.module('mainController', ['authServices'])
                     },
                     insertItem: function (item) {
                         item.username = app.username;
-                        item.paydate = vm.ConvertDateToUsFormat(item.paydate);
                         $http.post('/api/costs', item).then(function (data) {
                             if (!data.data.success) {
                                 alert(data.data.message);
@@ -139,7 +138,6 @@ angular.module('mainController', ['authServices'])
                         });
                     },
                     updateItem: function (item) {
-                        item.paydate = vm.ConvertDateToUsFormat(item.paydate);
                         $http.put('/api/costs/' + item._id, item).then(function (data) {
                             if (data.data.errors) {
                                 alert(data.data.message);
@@ -160,7 +158,7 @@ angular.module('mainController', ['authServices'])
                             return value.toFixed(2);
                         }
                     },
-                    { name: "paydate", type: "text", width: 100 },
+                    { name: "paydate", type: "date", width: 100 },
                     { name: "costtype", type: "select", items: CostTypesJsGrid(), valueField: "Name", textField: "Name" },
                     { name: "costdescription", type: "text" }
                 ]
@@ -197,7 +195,7 @@ angular.module('mainController', ['authServices'])
         $scope.drawChart = function (costtype = $scope.costtype, chart) {
             if (document.getElementById('piechart') === null) return;
             var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, costtype));
-            var optionsChart = chart.optionsChart;          
+            var optionsChart = chart.optionsChart;
             var chart = new google.visualization.PieChart(document.getElementById(chart.name));
             chart.draw(data, optionsChart);
         }
@@ -205,7 +203,6 @@ angular.module('mainController', ['authServices'])
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
         $scope.addCost = function () {
             $scope.cost.username = app.username;
-            $scope.cost.paydate = vm.ConvertDateToUsFormat($scope.cost.paydate);
             $scope.loading = true;
             $scope.errorMsg = false;
             $scope.successMsg = false;
@@ -251,11 +248,11 @@ angular.module('mainController', ['authServices'])
                             vm.totalCost
                         ];
                         google.charts.load('current', { 'packages': ['corechart'] });
-                        google.charts.setOnLoadCallback(function(){
-                            for(var i = 0; i<$scope.piecharts.length; i++){
+                        google.charts.setOnLoadCallback(function () {
+                            for (var i = 0; i < $scope.piecharts.length; i++) {
                                 $scope.drawChart(undefined, $scope.piecharts[i]);
                             }
-                            
+
                         });
                         loadJsGrid();
                     });
@@ -475,12 +472,13 @@ angular.module('mainController', ['authServices'])
                 }
             };
         };
-        vm.ConvertDateToUsFormat = function (date) {
-            var dd = date.substring(3, 5);
-            var mm = date.substring(0, 2);
-            var yyyy = date.substring(6, 10);
-            return dd + '.' + mm + '.' + yyyy;
-        };
+        // vm.ConvertDateToUsFormat = function (date) {
+            
+        //     var dd = date.substring(3, 5);
+        //     var mm = date.substring(0, 2);
+        //     var yyyy = date.substring(6, 10);
+        //     return dd + '.' + mm + '.' + yyyy;
+        // };
 
         vm.getDateTimeFromDate = function (date) {
             var newDate = date.toString();
