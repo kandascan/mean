@@ -23,7 +23,7 @@ angular.module('mainController', ['authServices'])
                         option: $scope.costtype
                     },
                     optionsChart: {
-                        title: 'Ptesti'
+                        title: 'Pie chart'
                     }
                 },
                 {
@@ -35,7 +35,7 @@ angular.module('mainController', ['authServices'])
                         option: $scope.costtype
                     },
                     optionsChart: {
-                        title: '3D ciastko',
+                        title: 'Pie 3D',
                         is3D: true
                     }
                 },
@@ -48,7 +48,7 @@ angular.module('mainController', ['authServices'])
                         option: $scope.costtype
                     },
                     optionsChart: {
-                        title: 'Donuts',
+                        title: 'Donut chart',
                         pieHole: 0.4
                     }
                 },
@@ -61,7 +61,7 @@ angular.module('mainController', ['authServices'])
                         option: $scope.costtype
                     },
                     optionsChart: {
-                        title: 'Jakis wybuch',
+                        title: 'Exploding pie',
                         pieSliceText: 'label',
                         slices: {
                             4: { offset: 0.2 },
@@ -82,21 +82,6 @@ angular.module('mainController', ['authServices'])
             }
             return 0;
         }
-
-        // var dataCharts = function (costs) {
-        //     var data = [];
-        //     var title = ['All cost', 'From begining'];
-
-        //     for (var i = 0; i < costs.length; i++) {
-        //         var costname = costs[i].costname;
-        //         var costprice = costs[i].costprice;
-        //         var tabdata = [costname, costprice];
-        //         data.push(tabdata);
-        //     }
-        //     data.sort(compare);
-        //     data.unshift(title);
-        //     return data;
-        // }
 
         var CostTypesJsGrid = function () {
             var selectCostTypes = [];
