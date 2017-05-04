@@ -96,7 +96,6 @@ angular.module('mainController', ['authServices'])
                         });
                     },
                     updateItem: function (item) {
-                        console.log(item);
                         item.paydate = vm.ConvertDateToUsFormat(item.paydate);
                         $http.put('/api/costs/' + item._id, item).then(function (data) {
                             if (data.data.errors) {

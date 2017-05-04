@@ -17,7 +17,7 @@ module.exports = function (router) {
 
         cost.save(function (err) {
             if (err) {
-                res.json({ success: false, message: 'Jakiś jebany error' })
+                res.json({ success: false, message: 'Ensure you were provide all the required fields' })
             } else {
                 res.json({ success: true, message: 'cost created' })
             }
