@@ -13,11 +13,29 @@ angular.module('mainController', ['authServices'])
             $scope.costtype = $scope.costtypes[0];
             $scope.costtypes = $scope.costtypes.sort();
 
+            $scope.linecharts = [
+                {
+                    icon: 'fa fa-line-chart',
+                    header: 'Curve line chart',
+                    name: 'curve_chart',
+                    type: 'line',
+                    filter: {
+                        select: $scope.costtypes,
+                        option: $scope.costtype
+                    },
+                    optionsChart: {
+                        title: ' costs',
+                        curveType: 'function',
+                        legend: { position: 'bottom' }
+                    }
+                }];
+
             $scope.piecharts = [
                 {
                     icon: 'fa fa-pie-chart',
                     header: 'Pie chart',
                     name: 'piechart',
+                    type: 'pie',
                     filter: {
                         select: $scope.costtypes,
                         option: $scope.costtype
@@ -30,6 +48,7 @@ angular.module('mainController', ['authServices'])
                     icon: 'fa fa-pie-chart',
                     header: 'Pie 3D chart',
                     name: 'piechart_3d',
+                    type: 'pie',
                     filter: {
                         select: $scope.costtypes,
                         option: $scope.costtype
@@ -43,6 +62,7 @@ angular.module('mainController', ['authServices'])
                     icon: 'fa fa-pie-chart',
                     header: 'Pie donut chart',
                     name: 'donutchart',
+                    type: 'pie',
                     filter: {
                         select: $scope.costtypes,
                         option: $scope.costtype
@@ -56,6 +76,7 @@ angular.module('mainController', ['authServices'])
                     icon: 'fa fa-pie-chart',
                     header: 'Exploding pie chart',
                     name: 'explodingpiechart',
+                    type: 'pie',
                     filter: {
                         select: $scope.costtypes,
                         option: $scope.costtype
@@ -70,7 +91,8 @@ angular.module('mainController', ['authServices'])
                             15: { offset: 0.5 },
                         }
                     }
-                }];
+                }
+            ];
         });
 
         function compare(a, b) {
@@ -178,7 +200,6 @@ angular.module('mainController', ['authServices'])
                 }
             } else {
                 for (var i = 0; i < costs.length; i++) {
-
                     if (costs[i].costtype === costtype) {
                         var costname = costs[i].costname;
                         var costprice = costs[i].costprice;
@@ -192,12 +213,42 @@ angular.module('mainController', ['authServices'])
             return data;
         }
 
+        var dataLineCharts = function (costs, costtype) {
+            var data = [];
+            var title = ['Date', 'Price'];
+            for (var i = 0; i < costs.length; i++) {
+                if (costs[i].costtype === costtype) {
+                    var paydate = vm.getDateTimeFromDate(costs[i].paydate);
+                    var costprice = costs[i].costprice;
+                    var tabdata = [paydate, costprice];
+                    data.push(tabdata);
+                }
+            }
+            data.unshift(title);
+            return data;
+        }
+
         $scope.drawChart = function (costtype = $scope.costtype, chart) {
-            if (document.getElementById('piechart') === null) return;
-            var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, costtype));
-            var optionsChart = chart.optionsChart;
-            var chart = new google.visualization.PieChart(document.getElementById(chart.name));
-            chart.draw(data, optionsChart);
+            if (document.getElementById(chart.name)) {
+                //if (document.getElementById(chart.name) == 'undefined') return;
+                switch (chart.type) {
+                    case 'line': {
+                        var data = google.visualization.arrayToDataTable(dataLineCharts($scope.costs, costtype));
+                        var optionsChart = chart.optionsChart;
+                        optionsChart.title = costtype + optionsChart.title;
+                        var chart = new google.visualization.LineChart(document.getElementById(chart.name));
+                        chart.draw(data, optionsChart);
+                    }
+                        break;
+                    case 'pie': {
+                        var data = google.visualization.arrayToDataTable(dataCharts($scope.costs, costtype));
+                        var optionsChart = chart.optionsChart;
+                        var chart = new google.visualization.PieChart(document.getElementById(chart.name));
+                        chart.draw(data, optionsChart);
+                    }
+                        break;
+                }
+            }
         }
 
         $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
@@ -247,12 +298,13 @@ angular.module('mainController', ['authServices'])
                             vm.totalToday,
                             vm.totalCost
                         ];
-                        google.charts.load('current', { 'packages': ['corechart'] });
                         google.charts.setOnLoadCallback(function () {
                             for (var i = 0; i < $scope.piecharts.length; i++) {
                                 $scope.drawChart(undefined, $scope.piecharts[i]);
                             }
-
+                            for (var i = 0; i < $scope.linecharts.length; i++) {
+                                $scope.drawChart(undefined, $scope.linecharts[i]);
+                            }
                         });
                         loadJsGrid();
                     });
@@ -473,7 +525,7 @@ angular.module('mainController', ['authServices'])
             };
         };
         // vm.ConvertDateToUsFormat = function (date) {
-            
+
         //     var dd = date.substring(3, 5);
         //     var mm = date.substring(0, 2);
         //     var yyyy = date.substring(6, 10);

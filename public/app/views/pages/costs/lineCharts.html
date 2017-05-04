@@ -1,1 +1,17 @@
 <h1> Not ready yet </h1>
+    <div ng-repeat="chart in linecharts">
+        <div class="widget">
+            <div class="widget-header"><h3><i ng-class="chart.icon"></i> {{chart.header}}</h3>
+                <div class="input-group myselect">
+                    <select ng-options="type for type in chart.filter.select" ng-model="chart.filter.option" ng-change="drawChart(chart.filter.option, chart)" class="form-control selectpicker">
+            </select>
+                </div>
+            </div>
+            <div class="widget-content">
+                <div id="{{chart.name}}"></div>
+            </div>
+        </div>
+    </div>
+<script>
+    google.charts.load('current', { 'packages': ['corechart'] });
+</script>
