@@ -4,6 +4,11 @@ var CostType = require('../models/costtype');
 var jwt = require('jsonwebtoken');
 var secret = 'tajne';
 
+Date.prototype.addHours = function (h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
+}
+
 module.exports = function (router) {
     // cost add
     router.post('/costs', function (req, res) {
@@ -14,7 +19,7 @@ module.exports = function (router) {
         cost.paydate = req.body.paydate;
         cost.costtype = req.body.costtype;
         cost.costdescription = req.body.costdescription;
-
+        cost.paydate.addHours(2);
         cost.save(function (err) {
             if (err) {
                 res.json({ success: false, message: 'Ensure you were provide all the required fields' })
@@ -36,7 +41,6 @@ module.exports = function (router) {
 
     router.put('/costs/:id', function (req, res) {
         Cost.findById(req.params.id, function (err, cost) {
-            console.log(req.body);
             if (err) {
                 res.send(err);
             }
@@ -46,7 +50,7 @@ module.exports = function (router) {
             cost.paydate = req.body.paydate;
             cost.costtype = req.body.costtype;
             cost.costdescription = req.body.costdescription;
-
+            cost.paydate.addHours(2);
             cost.save(function (err, cost) {
                 if (err) {
                     res.send(err);
