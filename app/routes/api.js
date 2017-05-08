@@ -19,7 +19,9 @@ module.exports = function (router) {
         cost.paydate = req.body.paydate;
         cost.costtype = req.body.costtype;
         cost.costdescription = req.body.costdescription;
-        cost.paydate.addHours(2);
+        if (cost.paydate) {
+            cost.paydate.addHours(2);
+        }
         cost.save(function (err) {
             if (err) {
                 res.json({ success: false, message: 'Ensure you were provide all the required fields' })

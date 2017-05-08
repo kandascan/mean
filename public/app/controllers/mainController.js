@@ -2,25 +2,24 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
     .controller('mainCtrl', function (Auth, Grid, AverageCosts, MinimalCosts, MaximalCosts, DailyCosts, MonthlyCosts, WeeklyCosts, PieChart, LineChart, DateTime, $timeout, $location, $rootScope, $scope, $http) {
         var app = this;
         app.loadme = false;
-        $scope.costs = [];
+        app.costs = [];
 
-        $scope.costtypes = [];
+        app.costtypes = [];
         $http.get('/api/coststype').then(function (data) {
             for (var i = 0; i < data.data.length; i++) {
-                $scope.costtypes.push(data.data[i].name);
+                app.costtypes.push(data.data[i].name);
             }
-            $scope.costtype = $scope.costtypes[0];
-            $scope.costtypes = $scope.costtypes.sort();
+            app.costtypes = app.costtypes.sort();
 
-            $scope.linecharts = LineChart.data($scope.costtypes);
-            $scope.piecharts = PieChart.data($scope.costtypes);
+            app.linecharts = LineChart.data(app.costtypes);
+            app.piecharts = PieChart.data(app.costtypes);
         });       
 
-        $scope.drawChart = function (costtype = $scope.costtype, chart) {
+        app.drawChart = function (costtype, chart) {
             if (document.getElementById(chart.name)) {
                 switch (chart.type) {
                     case 'line': {
-                        var data = google.visualization.arrayToDataTable(LineChart.getData($scope.costs, costtype));
+                        var data = google.visualization.arrayToDataTable(LineChart.getData(app.costs, costtype));
                         var optionsChart = chart.optionsChart;
                         optionsChart.title = costtype + optionsChart.title;
                         var chart = new google.visualization.LineChart(document.getElementById(chart.name));
@@ -28,7 +27,7 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
                     }
                         break;
                     case 'pie': {
-                        var data = google.visualization.arrayToDataTable(PieChart.getData($scope.costs, costtype));
+                        var data = google.visualization.arrayToDataTable(PieChart.getData(app.costs, costtype));
                         var optionsChart = chart.optionsChart;
                         var chart = new google.visualization.PieChart(document.getElementById(chart.name));
                         chart.draw(data, optionsChart);
@@ -38,24 +37,24 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
             }
         }
 
-        $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
-        $scope.addCost = function () {
-            $scope.cost.username = app.username;
-            $scope.loading = true;
-            $scope.errorMsg = false;
-            $scope.successMsg = false;
-            $http.post('/api/costs', $scope.cost).then(function (data) {
+        app.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
+        app.addCost = function () {
+            app.cost.username = app.username;
+            app.loading = true;
+            app.errorMsg = false;
+            app.successMsg = false;
+            $http.post('/api/costs', app.cost).then(function (data) {
                 if (data.data.success) {
-                    $scope.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
-                    $scope.successMsg = data.data.message;
-                    $scope.loading = false;
+                    app.cost = { username: '', costname: '', costprice: '', paydate: '', costtype: '', costdescription: '' };
+                    app.successMsg = data.data.message;
+                    app.loading = false;
                     $timeout(function () {
                         $location.path('/showCosts');
-                        $scope.successMsg = false;
+                        app.successMsg = false;
                     }, 1000);
                 } else {
-                    $scope.errorMsg = data.data.message;
-                    $scope.loading = false;
+                    app.errorMsg = data.data.message;
+                    app.loading = false;
                 }
             });
         };
@@ -69,24 +68,24 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
                     app.loadme = true;
 
                     $http.get('/api/costs/' + app.username).then(function (data) {
-                        $scope.costs = data.data;
+                        app.costs = data.data;
                         $rootScope.listCosts = [
-                            MonthlyCosts.total($scope.costs),
-                            AverageCosts.total($scope.costs),
-                            MinimalCosts.total($scope.costs),
-                            MaximalCosts.total($scope.costs),
-                            DailyCosts.total($scope.costs),
-                            WeeklyCosts.total($scope.costs)
+                            MonthlyCosts.total(app.costs),
+                            AverageCosts.total(app.costs),
+                            MinimalCosts.total(app.costs),
+                            MaximalCosts.total(app.costs),
+                            DailyCosts.total(app.costs),
+                            WeeklyCosts.total(app.costs)
                         ];
                         google.charts.setOnLoadCallback(function () {
-                            for (var i = 0; i < $scope.piecharts.length; i++) {
-                                $scope.drawChart($scope.piecharts[i].filter.option, $scope.piecharts[i]);
+                            for (var i = 0; i < app.piecharts.length; i++) {
+                                app.drawChart(app.piecharts[i].filter.option, app.piecharts[i]);
                             }
-                            for (var i = 0; i < $scope.linecharts.length; i++) {
-                                $scope.drawChart(undefined, $scope.linecharts[i]);
+                            for (var i = 0; i < app.linecharts.length; i++) {
+                                app.drawChart(app.linecharts[i].filter.option, app.linecharts[i]);
                             }
                         });
-                        Grid.fillGrid($scope.costs, app.username, $scope.costtypes);
+                        Grid.fillGrid(app.costs, app.username, app.costtypes);
                     });
                 });
             } else {
