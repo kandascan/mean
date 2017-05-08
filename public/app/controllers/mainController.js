@@ -12,8 +12,8 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
             $scope.costtype = $scope.costtypes[0];
             $scope.costtypes = $scope.costtypes.sort();
 
-            $scope.linecharts = LineChart.data($scope.costtypes, $scope.costtype);
-            $scope.piecharts = PieChart.data($scope.costtypes, $scope.costtype);
+            $scope.linecharts = LineChart.data($scope.costtypes);
+            $scope.piecharts = PieChart.data($scope.costtypes);
         });       
 
         $scope.drawChart = function (costtype = $scope.costtype, chart) {
@@ -80,7 +80,7 @@ angular.module('mainController', ['authServices', 'jsGridServices', 'dateTimeSer
                         ];
                         google.charts.setOnLoadCallback(function () {
                             for (var i = 0; i < $scope.piecharts.length; i++) {
-                                $scope.drawChart(undefined, $scope.piecharts[i]);
+                                $scope.drawChart($scope.piecharts[i].filter.option, $scope.piecharts[i]);
                             }
                             for (var i = 0; i < $scope.linecharts.length; i++) {
                                 $scope.drawChart(undefined, $scope.linecharts[i]);

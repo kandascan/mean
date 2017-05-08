@@ -2,7 +2,7 @@ angular.module('lineChartServices', ['dateTimeServices'])
     .factory('LineChart', function (DateTime) {
         var chartsFactory = {};
 
-        chartsFactory.data = function (select, option) {
+        chartsFactory.data = function (select) {
             return [
                 {
                     icon: 'fa fa-line-chart',
@@ -11,7 +11,7 @@ angular.module('lineChartServices', ['dateTimeServices'])
                     type: 'line',
                     filter: {
                         select: select,
-                        option: option
+                        option: select[0]
                     },
                     optionsChart: {
                         title: ' costs',

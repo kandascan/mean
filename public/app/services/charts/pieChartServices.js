@@ -2,7 +2,7 @@ angular.module('pieChartServices', ['sortServices'])
     .factory('PieChart', function (Sort) {
         var chartsFactory = {};
 
-        chartsFactory.data = function (select, option) {
+        chartsFactory.data = function (select) {
             return [
                 {
                     icon: 'fa fa-pie-chart',
@@ -11,7 +11,7 @@ angular.module('pieChartServices', ['sortServices'])
                     type: 'pie',
                     filter: {
                         select: select,
-                        option: option
+                        option: select[0]
                     },
                     optionsChart: {
                         title: 'Pie chart'
@@ -24,7 +24,7 @@ angular.module('pieChartServices', ['sortServices'])
                     type: 'pie',
                     filter: {
                         select: select,
-                        option: option
+                        option: select[1]
                     },
                     optionsChart: {
                         title: 'Pie 3D',
@@ -38,7 +38,7 @@ angular.module('pieChartServices', ['sortServices'])
                     type: 'pie',
                     filter: {
                         select: select,
-                        option: option
+                        option: select[2]
                     },
                     optionsChart: {
                         title: 'Donut chart',
@@ -52,7 +52,7 @@ angular.module('pieChartServices', ['sortServices'])
                     type: 'pie',
                     filter: {
                         select: select,
-                        option: option
+                        option: select[3]
                     },
                     optionsChart: {
                         title: 'Exploding pie',
