@@ -11,9 +11,9 @@ app.use(morgan('dev'));
 
 // database configuration
 var mongoose = require('mongoose');
-var mongoUser = 'pepisboczek';
+var mongoUser = 'mywallet';
 var mongoPass = 'h2h4wkrpfv';
-var mongoDatabase = 'mywalletdb';
+var mongoDatabase = 'mywallet';
 
 //body parser to parsing data to json object
 var bodyParser = require('body-parser');
@@ -21,8 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);
-
-mongoose.connect('mongodb://'+mongoUser+':'+mongoPass+'@ds117899.mlab.com:17899/'+mongoDatabase, function(err){
+mongoose.connect('mongodb://'+mongoUser+':'+mongoPass+'@ds131511.mlab.com:31511/'+mongoDatabase, function(err){
     if(err){
         console.log("Not connected to the database: " + err);
     } else{
