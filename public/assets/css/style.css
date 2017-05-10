@@ -13,6 +13,41 @@ body {
     padding-left: 0;    
 }
 
+
+@font-face { font-family: Moonlights on the Beach; src: url('../fonts/Moonlights-on-the-Beach.ttf'); } 
+@font-face { font-family: CodePredators-Regular; src: url('../fonts/CodePredators-Regular.ttf'); } 
+@font-face { font-family: Animated; src: url('../fonts/Animated.ttf'); } 
+@font-face { font-family: Meatloaf Shadow Outline; src: url('../fonts/Meatloaf Shadow Outline.ttf'); } 
+@font-face { font-family: Big_Bottom_Typeface_Normal; src: url('../fonts/Big_Bottom_Typeface_Normal.ttf'); } 
+
+.homeFont {
+    
+    font-family: 'Meatloaf Shadow Outline';
+    font-size: 70px;
+}
+
+
+.chartsFont {
+    
+    font-family: 'Big_Bottom_Typeface_Normal';
+}
+
+.animatedFont {
+    
+    font-family: 'Animated';
+    font-size: 30px;
+}
+
+.myFont {
+    font-family: 'Moonlights on the Beach';
+    font-size: 50px;
+}
+
+.fontPredator {
+    font-family: 'CodePredators-Regular';
+    font-size: 50px;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 225px;
