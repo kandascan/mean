@@ -97,32 +97,43 @@
             <!--container-fluid close-->
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav" ng-show="!main.isLoggedIn">
+                    <li>
+                        <a href="/register" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
+                    </li>
+                    <li>
+                        <a href="/login" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="glyphicon glyphicon-log-in"></i> Login</a>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav side-nav" ng-show="main.isLoggedIn">
                     <li style="text-decoration: line-through;">
-                        <a href="#"><i class="fa fa-fw fa-search"></i>  Search</a>
+                        <a href="#" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-fw fa-search"></i>  Search</a>
                     </li>
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-bar-chart-o"></i>  Charts <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                         <ul id="submenu-2" class="collapse">
-                            <li><a href="/pieCharts"><i class="fa fa-pie-chart" aria-hidden="true"></i> Pie Chart</a></li>
-                            <li><a href="/lineCharts"><i class="fa fa-line-chart" aria-hidden="true"></i> Line Chart</a></li>
-                            <li style="text-decoration: line-through;"><a href="/barCharts"><i class="fa fa-bar-chart" aria-hidden="true"></i> Bar Chart</a></li>
+                            <li><a href="/pieCharts" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-pie-chart" aria-hidden="true"></i> Pie Chart</a></li>
+                            <li><a href="/lineCharts" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-line-chart" aria-hidden="true"></i> Line Chart</a></li>
+                            <li style="text-decoration: line-through;"><a href="/barCharts" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bar-chart" aria-hidden="true"></i> Bar Chart</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="glyphicon glyphicon-piggy-bank"></i> Costs <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                         <ul id="submenu-1" class="collapse">
-                            <li><a href="/addCost"><i class="glyphicon glyphicon-plus"></i> Add cost</a></li>
-                            <li><a href="/showCosts"><i class="fa fa-table" aria-hidden="true"></i> Show costs</a></li>
+                            <li><a href="/addCost" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="glyphicon glyphicon-plus"></i> Add cost</a></li>
+                            <li><a href="/showCosts" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-table" aria-hidden="true"></i> Show costs</a></li>
 
                             <!--<li><a href="#"><i class="fa fa-angle-double-right"></i> Multi Costs</a></li>-->
                         </ul>
                     </li>
                     <li style="text-decoration: line-through;">
-                        <a href="#"><i class="fa fa-fw fa-paper-plane-o"></i> Contact</a>
+                        <a href="#" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-fw fa-paper-plane-o"></i> Contact</a>
                     </li>
                     <li>
-                        <a href="/about"><i class="fa fa-fw fa fa-question-circle"></i> About</a>
+                        <a href="/about" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-fw fa fa-question-circle"></i> About</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target=".navbar-ex1-collapse" ng-click="main.logout();"><i class="fa fa-fw fa-power-off"></i> Logout</a>
                     </li>
                 </ul>
             </div>
