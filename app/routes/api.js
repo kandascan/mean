@@ -64,7 +64,7 @@ module.exports = function (router) {
 
     router.get('/costs/:name', function (req, res) {
         var name = req.params.name;
-        Cost.find({ 'username': name }).exec(function (err, data) {
+        Cost.find({ 'username': name }).sort( { paydate: -1 } ).exec(function (err, data) {
             if (err) {
                 return res.send(500, err);
             }
